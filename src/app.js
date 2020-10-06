@@ -3,15 +3,6 @@ import bodyParser from 'body-parser'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
-/*Le repertoire public est relatif au repertoire d'où on lance notre commande
-node. Donc si on exécute notre application express depuis un repertoire ou le
-dossier public est présent il n'y aura pas de problème. Mais si on souhaite
-exécuter notre application express depuis un repertoire différent cela posera
-problème. Pour cela il faudra que l'on travaille avec des chemins absolus.*/
-//We can't use _filename and _dirname directives anymore in esm modules
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
 //our user mini-database
 const db_user = {
   alice: '123',
@@ -44,10 +35,12 @@ const passwordChecker = (req, res, next) => {
   }
 }
 
-const IP = '192.168.1.70'
+const IP = '172.18.250.171'
 const PORT = 7777
 
 const app = express()
+
+//rajouter middleware CORS
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
   res.header('Access-Control-Allow-Headers', 'Content-Type')
@@ -63,7 +56,7 @@ app.use(bodyParser.json())
 app.use('/login', userChecker)
 app.use('/login', passwordChecker)
 
-//Create route /login for POST method -> ne système de login simple accessible
+//Create route /login for POST method -> un système de login simple accessible
 //par des requêtes POST sur http://IP:PORT/login
 /*We are waiting for a POST request with a body containing json data
 {'username':'alice', 'password':'123'} */

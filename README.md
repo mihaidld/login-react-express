@@ -1,5 +1,7 @@
 # Express + react front-end - exemple
 
+_used with login-react-react_
+
 ## login (express)
 
 1. installer les dependencies
